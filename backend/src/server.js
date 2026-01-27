@@ -27,7 +27,7 @@ const __dirname = path.resolve();
 
 
 
-app.get('/', (req, res) => {
+app.get('/hello', (req, res) => {
     res.send('Hello World!')
 })
 
