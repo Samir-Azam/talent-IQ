@@ -3,6 +3,7 @@ import {
   SignedIn,
   SignedOut,
   SignInButton,
+  SignOutButton,
   UserButton,
 } from "@clerk/clerk-react";
 
@@ -14,6 +15,7 @@ function App() {
       </SignedOut>
       <SignedIn>
         <UserButton />
+        <SignOutButton />
       </SignedIn>
     </header>
   );
