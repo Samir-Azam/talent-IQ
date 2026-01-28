@@ -1,6 +1,6 @@
 import { serverClient } from "../lib/stream.js";
 
-export const getStreamToken = async()=>{
+export const getStreamToken = async(req, res)=>{
     try {
         const token = serverClient.createToken(req.user.clerkId);
         return res.status(200).json({
