@@ -4,14 +4,17 @@ import { connectDB } from './lib/db.js'
 import cors from "cors"
 import { serve } from "inngest/express"
 import { inngest, functions } from './lib/inngest.js'
+import { clerkMiddleware, requireAuth } from "@clerk/express";
 import path from "path"
+
+const __dirname = path.resolve();
 
 const app = express()
 
 // middlewares
 
 app.use(express.json())
-
+app.use(clerkMiddleware()) // by using this we got access to req.auth()
 app.use(
     cors(
         {
@@ -20,20 +23,17 @@ app.use(
         }
     )
 )
-
 app.use("/api/inngest", serve({client: inngest, functions}))
 
-const __dirname = path.resolve();
+// routes
+import chatRoutes from "./routes/chat.routes.js"
+app.use("/api/chat",chatRoutes)
 
-
-
-app.get('/hello', (req, res) => {
-    res.send('Hello World!')
-})
 
 app.get('/health', (req, res) => {
     res.status(200).json({ status: 'ok' })
 })
+
 
 if (ENV.NODE_ENV=="production"){
     app.use(express.static(path.join(__dirname, "../frontend/dist")));
